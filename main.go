@@ -22,37 +22,34 @@ func main() {
 
 	page := ""
 
-	var cut []string
+	var newLines []string
 
-	for i := 0; i < len(lines); i++ {
-
-		if len(cut) > 0 {
-
-		}
-
-		line := lines[i]
+	for index, line := range lines {
 
 		if len(line) >= 128 {
 
-			if regex.MatchString(line[117:128]) {
+			if regex.MatchString(line[118:128]) {
+
+				fmt.Printf("Posição do match: %d\n", index)
 
 				if page == "" {
 
-					page = line[117:128]
+					page = line[118:128]
 
 				}
 
-				if page[5:7] != line[117:128] {
+				if page[5:7] != line[122:123] {
 
-					page = line[117:128]
+					page = line[118:128]
 
-					cut = lines[i:]
-
-					i = 0
-
+				} else {
+					newLines = append(newLines, line)
 				}
 
 			}
+		} else {
+			newLines = append(newLines, line)
 		}
 	}
+
 }
