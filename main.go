@@ -24,28 +24,51 @@ func main() {
 
 	newLines := make([]string, 60)
 
-	newFileIndex := 0
+	startIndexPage := 118
+	endIndexPage := 128
+
+	column := 1
 
 	for index, line := range lines {
 
-		if len(line) >= 128 && regex.MatchString(line[118:128]) {
+		if len(line) >= 128 && regex.MatchString(line[startIndexPage:endIndexPage]) {
 
 			if page == "" {
 
-				page = line[118:128]
+				page = line[startIndexPage:endIndexPage]
 
 			}
 
-			if page[5:7] != line[122:123] {
+			if page[5:7] != line[startIndexPage+5:endIndexPage-3] {
 
-				page = line[118:128]
+				page = line[startIndexPage:endIndexPage]
+
+				column += 1
 
 			} else {
-				newLines[index] += line
+
+				if column > 1 {
+
+					newLines[index-(60*column)] += line
+
+				} else {
+					fmt.Printf("Índice: %d, Linha: %s\n", index, line)
+					newLines[index] += line
+
+				}
 			}
 
 		} else {
-			newLines[index] += line
+
+			if column > 1 {
+
+				newLines[index-(60*column)] += line
+
+			} else {
+
+				newLines[index] += line
+
+			}
 		}
 	}
 
