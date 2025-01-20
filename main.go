@@ -22,33 +22,30 @@ func main() {
 
 	page := ""
 
-	var newLines []string
+	newLines := make([]string, 60)
+
+	newFileIndex := 0
 
 	for index, line := range lines {
 
-		if len(line) >= 128 {
+		if len(line) >= 128 && regex.MatchString(line[118:128]) {
 
-			if regex.MatchString(line[118:128]) {
+			if page == "" {
 
-				fmt.Printf("Posição do match: %d\n", index)
-
-				if page == "" {
-
-					page = line[118:128]
-
-				}
-
-				if page[5:7] != line[122:123] {
-
-					page = line[118:128]
-
-				} else {
-					newLines = append(newLines, line)
-				}
+				page = line[118:128]
 
 			}
+
+			if page[5:7] != line[122:123] {
+
+				page = line[118:128]
+
+			} else {
+				newLines[index] += line
+			}
+
 		} else {
-			newLines = append(newLines, line)
+			newLines[index] += line
 		}
 	}
 
