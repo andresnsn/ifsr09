@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strings"
@@ -36,8 +37,6 @@ func main() {
 
 		if len(line) >= 128 && regex.MatchString(line[startIndexPage:endIndexPage]) {
 
-			fmt.Printf("Linha que eu dei match: %d\n", index)
-
 			if page == "" {
 				page = line[startIndexPage:endIndexPage]
 
@@ -45,29 +44,33 @@ func main() {
 
 			if page[5:7] != line[startIndexPage+5:endIndexPage-3] {
 
-				fmt.Printf("Entrou, pois: %s | %s\n", page[5:7], line[startIndexPage+5:endIndexPage-3])
-
 				page = line[startIndexPage:endIndexPage]
-
-				fmt.Printf("Número antigo da coluna: %d\n", column)
 
 				column += 1
 
-				fmt.Printf("Número novo da coluna: %d\n", column)
+				newLines[index-(120*column)] += line
 
-				newLines[index-(121*column)] += line
+				fmt.Printf("newLines antes: %s\n", newLines[index-(120*column)])
 
-				fmt.Printf("Resultado aqui: %d\n", index-(61*column))
+				// fmt.Printf("Index A: %d\n", index)
 
-				fmt.Printf("Index atual: %d\n", index)
+				// fmt.Printf("Resultado aqui A: %d\n", index-(120*column))
+
+				if index-(120*column) == 0 {
+					// fmt.Printf("Linha atual: %s\n", line)
+					fmt.Printf("Concatenação: %s\n", newLines[index-(120*column)])
+				}
+				fmt.Printf("Expressão: %d\n", index-(120*column))
 
 			} else {
 
 				if column > 0 {
 
-					newLines[index-(121*column)] += line
+					newLines[index-(120*column)] += line
 
-					fmt.Printf("Ocorrência X na linha: %d\n", index)
+					// fmt.Printf("Index B: %d\n", index)
+
+					// fmt.Printf("Resultado aqui B: %d\n", index-(120*column))
 
 					ocurrencyCounter += 1
 
@@ -82,9 +85,11 @@ func main() {
 
 			if column > 0 {
 
-				newLines[index-(121*column)] += line
+				newLines[index-(120*column)] += line
 
-				fmt.Printf("Ocorrência Z na linha: %d\n", index)
+				// fmt.Printf("Index C: %d\n", index)
+
+				// fmt.Printf("Resultado aqui C: %d\n", index-(120*column))
 
 				ocurrencyCounter += 1
 
@@ -96,8 +101,19 @@ func main() {
 		}
 	}
 
-	fmt.Printf("Ocurrency Counter: %d", ocurrencyCounter)
+	// Criar o arquivo
+	a, _ := os.Create("output.txt")
+	if err != nil {
+		log.Fatalf("Erro ao criar o arquivo: %v", err)
+	}
+	defer a.Close()
 
-	os.WriteFile("output.txt", []byte(strings.Join(newLines, "\n")), 0644)
+	// Escrever as strings no arquivo
+	for _, line := range newLines {
+		_, err := a.WriteString(line + "\n")
+		if err != nil {
+			log.Fatalf("Erro ao escrever no arquivo: %v", err)
+		}
+	}
 
 }
