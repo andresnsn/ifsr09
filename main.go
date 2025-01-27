@@ -11,7 +11,7 @@ import (
 // 0 a 29
 func main() {
 
-	file, err := os.ReadFile("input.txt")
+	file, err := os.ReadFile("other.txt")
 
 	if err != nil {
 		fmt.Println("Erro ao ler o arquivo: ", err)
@@ -48,29 +48,30 @@ func main() {
 
 				column += 1
 
-				newLines[index-(120*column)] += line
+				newLines[index-(6*column)] += line
 
-				fmt.Printf("newLines antes: %s\n", newLines[index-(120*column)])
+				// fmt.Printf("newLines antes: %s\n", newLines[index-(6*column)])
 
 				// fmt.Printf("Index A: %d\n", index)
 
-				// fmt.Printf("Resultado aqui A: %d\n", index-(120*column))
+				// fmt.Printf("Resultado aqui A: %d\n", index-(6*column))
 
-				if index-(120*column) == 0 {
+				if index-(6*column) == 0 {
 					// fmt.Printf("Linha atual: %s\n", line)
-					fmt.Printf("Concatenação: %s\n", newLines[index-(120*column)])
+					// fmt.Printf("Concatenação: %s\n", newLines[0])
 				}
-				fmt.Printf("Expressão: %d\n", index-(120*column))
+				fmt.Printf("Concatenação: %s\n", newLines[0])
+				fmt.Printf("Expressão: %d\n", index-(6*column))
 
 			} else {
 
 				if column > 0 {
 
-					newLines[index-(120*column)] += line
+					newLines[index-(6*column)] += line
 
 					// fmt.Printf("Index B: %d\n", index)
 
-					// fmt.Printf("Resultado aqui B: %d\n", index-(120*column))
+					// fmt.Printf("Resultado aqui B: %d\n", index-(6*column))
 
 					ocurrencyCounter += 1
 
@@ -85,11 +86,11 @@ func main() {
 
 			if column > 0 {
 
-				newLines[index-(120*column)] += line
+				newLines[index-(6*column)] += line
 
 				// fmt.Printf("Index C: %d\n", index)
 
-				// fmt.Printf("Resultado aqui C: %d\n", index-(120*column))
+				// fmt.Printf("Resultado aqui C: %d\n", index-(6*column))
 
 				ocurrencyCounter += 1
 
