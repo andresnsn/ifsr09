@@ -11,7 +11,7 @@ import (
 // 0 a 29
 func main() {
 
-	file, err := os.ReadFile("other.txt")
+	file, err := os.ReadFile("input.txt")
 
 	if err != nil {
 		fmt.Println("Erro ao ler o arquivo: ", err)
@@ -48,21 +48,21 @@ func main() {
 
 				column += 1
 
-				fmt.Printf("Length before change A: %d\n", len(newLines[index-(6*column)]))
+				fmt.Printf("Length before change A: %d\n", len(newLines[index-(120*column)]))
 
-				newLines[index-(6*column)] = newLines[index-(6*column)] + line
+				newLines[index-(120*column)] = newLines[index-(120*column)] + line
 
-				fmt.Printf("Length after change A: %d\n", len(newLines[index-(6*column)]))
+				fmt.Printf("Length after change A: %d\n", len(newLines[index-(120*column)]))
 
 			} else {
 
 				if column > 0 {
 
-					fmt.Printf("Length before change B: %d\n", len(newLines[index-(6*column)]))
+					fmt.Printf("Length before change B: %d\n", len(newLines[index-(120*column)]))
 
-					newLines[index-(6*column)] = newLines[index-(6*column)] + line
+					newLines[index-(120*column)] = newLines[index-(120*column)] + line
 
-					fmt.Printf("Length after change B: %d\n", len(newLines[index-(6*column)]))
+					fmt.Printf("Length after change B: %d\n", len(newLines[index-(120*column)]))
 
 					ocurrencyCounter += 1
 
@@ -77,13 +77,13 @@ func main() {
 
 			if column > 0 {
 
-				fmt.Printf("Length before change C: %s\n", newLines[index-(6*column)])
+				fmt.Printf("Length before change C: %s\n", newLines[index-(120*column)])
 
-				newLines[index-(6*column)] = newLines[index-(6*column)] + line
+				newLines[index-(120*column)] = newLines[index-(120*column)] + line
 
 				fmt.Printf(" DASA %s", line)
 
-				fmt.Printf("Length after change C: %s\n", newLines[index-(6*column)])
+				fmt.Printf("Length after change C: %s\n", newLines[index-(120*column)])
 
 			} else {
 
@@ -99,11 +99,10 @@ func main() {
 	}
 	defer a.Close()
 
-	// Grava as strings concatenadas no arquivo de saída
 	for _, line := range newLines {
-
-		a.WriteString(line)
-
+		// Remove todos os caracteres \r da linha antes de gravar
+		cleanedLine := strings.Replace(line, "\r", "", -1)
+		a.WriteString(cleanedLine + "\n") // Adiciona \n para nova linha
 	}
 
 }
