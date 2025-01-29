@@ -41,10 +41,11 @@ func main() {
 		}
 	}
 
-	for _, line := range lines {
+	for index, line := range lines {
 		if len(line) < highest {
 			difference := highest - len(line)
 			line += strings.Repeat(" ", difference)
+			lines[index] = line
 		}
 
 		fmt.Printf("Novo len da line: %d\n", len(line))
