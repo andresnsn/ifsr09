@@ -33,6 +33,23 @@ func main() {
 
 	column := 0
 
+	highest := 0
+
+	for _, line := range lines {
+		if len(line) > highest {
+			highest = len(line)
+		}
+	}
+
+	for _, line := range lines {
+		if len(line) < highest {
+			difference := highest - len(line)
+			line += strings.Repeat(" ", difference)
+		}
+
+		fmt.Printf("Novo len da line: %d\n", len(line))
+	}
+
 	for index, line := range lines {
 
 		if len(line) >= 128 && regex.MatchString(line[startIndexPage:endIndexPage]) {
@@ -48,21 +65,13 @@ func main() {
 
 				column += 1
 
-				fmt.Printf("Length before change A: %d\n", len(newLines[index-(120*column)]))
-
 				newLines[index-(120*column)] = newLines[index-(120*column)] + line
-
-				fmt.Printf("Length after change A: %d\n", len(newLines[index-(120*column)]))
 
 			} else {
 
 				if column > 0 {
 
-					fmt.Printf("Length before change B: %d\n", len(newLines[index-(120*column)]))
-
 					newLines[index-(120*column)] = newLines[index-(120*column)] + line
-
-					fmt.Printf("Length after change B: %d\n", len(newLines[index-(120*column)]))
 
 					ocurrencyCounter += 1
 
@@ -77,13 +86,7 @@ func main() {
 
 			if column > 0 {
 
-				fmt.Printf("Length before change C: %s\n", newLines[index-(120*column)])
-
 				newLines[index-(120*column)] = newLines[index-(120*column)] + line
-
-				fmt.Printf(" DASA %s", line)
-
-				fmt.Printf("Length after change C: %s\n", newLines[index-(120*column)])
 
 			} else {
 
