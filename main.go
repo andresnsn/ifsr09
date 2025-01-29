@@ -104,9 +104,9 @@ func main() {
 	defer a.Close()
 
 	for _, line := range newLines {
-		// Remove todos os caracteres \r da linha antes de gravar
+
 		cleanedLine := strings.Replace(line, "\r", "", -1)
-		a.WriteString(cleanedLine + "\n") // Adiciona \n para nova linha
+		a.WriteString(cleanedLine + "\n")
 	}
 
 }
