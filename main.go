@@ -22,9 +22,9 @@ func main() {
 
 	lines := strings.Split(string(file), "\n")
 
-	page := ""
+	newLines := make([]string, len(lines))
 
-	newLines := make([]string, 300)
+	page := ""
 
 	startIndexPage := 118
 	endIndexPage := 128
@@ -48,36 +48,27 @@ func main() {
 
 				column += 1
 
-				newLines[index-(6*column)] += line
+				fmt.Printf("Length before change A: %d\n", len(newLines[index-(6*column)]))
 
-				// fmt.Printf("newLines antes: %s\n", newLines[index-(6*column)])
+				newLines[index-(6*column)] = newLines[index-(6*column)] + line
 
-				// fmt.Printf("Index A: %d\n", index)
-
-				// fmt.Printf("Resultado aqui A: %d\n", index-(6*column))
-
-				if index-(6*column) == 0 {
-					// fmt.Printf("Linha atual: %s\n", line)
-					// fmt.Printf("Concatenação: %s\n", newLines[0])
-				}
-				fmt.Printf("Concatenação: %s\n", newLines[0])
-				fmt.Printf("Expressão: %d\n", index-(6*column))
+				fmt.Printf("Length after change A: %d\n", len(newLines[index-(6*column)]))
 
 			} else {
 
 				if column > 0 {
 
-					newLines[index-(6*column)] += line
+					fmt.Printf("Length before change B: %d\n", len(newLines[index-(6*column)]))
 
-					// fmt.Printf("Index B: %d\n", index)
+					newLines[index-(6*column)] = newLines[index-(6*column)] + line
 
-					// fmt.Printf("Resultado aqui B: %d\n", index-(6*column))
+					fmt.Printf("Length after change B: %d\n", len(newLines[index-(6*column)]))
 
 					ocurrencyCounter += 1
 
 				} else {
 
-					newLines[index] += line
+					newLines[index] = newLines[index] + line
 
 				}
 			}
@@ -86,35 +77,33 @@ func main() {
 
 			if column > 0 {
 
-				newLines[index-(6*column)] += line
+				fmt.Printf("Length before change C: %s\n", newLines[index-(6*column)])
 
-				// fmt.Printf("Index C: %d\n", index)
+				newLines[index-(6*column)] = newLines[index-(6*column)] + line
 
-				// fmt.Printf("Resultado aqui C: %d\n", index-(6*column))
+				fmt.Printf(" DASA %s", line)
 
-				ocurrencyCounter += 1
+				fmt.Printf("Length after change C: %s\n", newLines[index-(6*column)])
 
 			} else {
 
-				newLines[index] += line
+				newLines[index] = newLines[index] + line
 
 			}
 		}
 	}
 
-	// Criar o arquivo
-	a, _ := os.Create("output.txt")
+	a, err := os.Create("output.txt")
 	if err != nil {
 		log.Fatalf("Erro ao criar o arquivo: %v", err)
 	}
 	defer a.Close()
 
-	// Escrever as strings no arquivo
+	// Grava as strings concatenadas no arquivo de saída
 	for _, line := range newLines {
-		_, err := a.WriteString(line + "\n")
-		if err != nil {
-			log.Fatalf("Erro ao escrever no arquivo: %v", err)
-		}
+
+		a.WriteString(line)
+
 	}
 
 }
